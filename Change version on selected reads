@@ -1,0 +1,21 @@
+
+OLD = "v001"
+NEW = "v002"
+
+reads = [n for n in nuke.selectedNodes() if n.Class() == "Read"]
+
+if not reads:
+    nuke.message("No hay nodos Read seleccionados")
+else:
+    changed = 0
+
+    for r in reads:
+        file_knob = r["file"]
+        old_path = file_knob.value()
+
+        if OLD in old_path:
+            new_path = old_path.replace(OLD, NEW)
+            file_knob.setValue(new_path)
+            changed += 1
+
+    nuke.message(f"Paths actualizados en {changed} Read(s)")
